@@ -1,0 +1,35 @@
+set fname out.xyz
+mol new $fname autobonds yes waitfor all
+
+set selc [atomselct top {name C}]
+$selc set type 1
+$selc set mass 28.05316
+
+set sel [atomselect top all]
+
+topo retypebonds
+vmdcon -info "assigned [topo numbondtype] bond types to [topo numbonds] bonds:"
+vmdcon -info "bondtypes: [topo bondtypesnames]"
+
+topo guessangles
+vmdcon -info "assigned [topo numanglestypes] angle types to [topo numangles] angles:"
+vmdcon -info "angletypes: [topo angletypesnames]"
+
+topo guessdihedrals
+vmdcon -info "assigned [topo numdihedraltypes] dihedral types to [topo numdihedrals] dihedrals:"
+vmdcon -info "dihedraltypes: [topo dihedraltypenames]"
+
+mol reanalyze top
+
+set minmax [measure minmax $sel -withradii]
+set box [vecscale 1.1 [vecsub [lindex $minmax 1 ] [lindex $minmax 0]]]
+pbc set $box
+vmdcon -info "box size: $box"
+set center [measure center $sel weight none]
+$sel moveby [vecscale -1.0 $center]
+vmdcon -info "moved center from $center to [measure center $sel weight none]"
+
+TopoTools::replicatemol top 1 10 50
+
+animate write pdb /Users/niko/Desktop/40x40/VKR_100_20_50/100x10x50.pdb
+
