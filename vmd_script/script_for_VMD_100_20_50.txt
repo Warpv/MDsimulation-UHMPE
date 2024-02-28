@@ -1,7 +1,7 @@
-set fname out.xyz
+set fname frame.xyz
 mol new $fname autobonds yes waitfor all
 
-set selc [atomselct top {name C}]
+set selc [atomselct top {name A}]
 $selc set type 1
 $selc set mass 28.05316
 
@@ -29,7 +29,9 @@ set center [measure center $sel weight none]
 $sel moveby [vecscale -1.0 $center]
 vmdcon -info "moved center from $center to [measure center $sel weight none]"
 
-TopoTools::replicatemol top 1 10 50
+TopoTools::replicatemol top 1 10 20
 
-animate write pdb /Users/niko/Desktop/40x40/VKR_100_20_50/100x10x50.pdb
+animate write pdb /Users/niko/Desktop/VSCode/simulation-UHMW-PE-adhesion/pdb_lib/sim_md_11A.pdb
+
+
 
