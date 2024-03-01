@@ -37,3 +37,5 @@ TopoTools::replicatemol top 1 1 1
 
 topo writelammpsdata /Users/niko/Desktop/40x40/VKR_100_20_50/data.VKR_100_20_50_argon
 
+
+
