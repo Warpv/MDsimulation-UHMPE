@@ -93,4 +93,4 @@ WARNING: Bond/angle/dihedral extent > half of periodic box length (../domain.cpp
 Per MPI rank memory allocation (min/avg/max) = 6.778 | 6.778 | 6.778 Mbytes
 Step Temp E_pair E_mol TotEng Press 
        0            0    47.001004    18.833693    65.834697    73093.496 
-Total wall time: 0:00:01
+Total wall time: 0:00:00
