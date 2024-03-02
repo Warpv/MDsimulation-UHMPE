@@ -5,7 +5,7 @@ boundary p p p
 log /Users/niko/Desktop/VSCode/simulation-UHMW-PE-adhesion/lammps script/log/${simname}.log
 
 # Read in a data file containing information LAMMPS needs to run a simulation
-read_data data.sim_md_19kA
+#read_data data.sim_md_11A
 
 # interaction styles
 atom_style molecular
@@ -28,20 +28,23 @@ angle_coeff  1    10.0 120.0        # A-A-A
 # groups define
 
 group A type 1
-group Ar type 2
+#group Ar type 2
 
 # velocity 
 velocity all create 100 5324324 dist gaussian mom no rot no
 velocity Ar set  0 -0.7 0
 fix 1 all nvt temp 280 320 $(100.0*df)
 fix 2 all efield 0.0 0.0 0.00002
-fix 3 C bond/break 5 1 2.0
+fix 3 A bond/break 5 1 2.0
 fix 4 Ar deposit 100 3 500 12345 region slab near 1.0 & vz -85000 -15000
 fix 5 wall/reflect zhi EDGE 
 
-fix 2 all print 1000 "Argon velocity = $vx $vy $vz"
+#fix 2 all print 1000 "Argon velocity = $vx $vy $vz"
 dump 1 all dcd 1 step1a.dcd /Users/niko/Desktop/VSCode/simulation-UHMW-PE-adhesion/lammps/dump
 
+
+
+# dynamics
 timestep 0.03
 
 # ----------------------------------
