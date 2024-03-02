@@ -5,7 +5,7 @@ atom_style molecular
 
 #log /Users/niko/Desktop/VSCode/simulation-UHMW-PE-adhesion/lammps script/log/${simname}.log
 
-read_data /Users/niko/Desktop/VSCode/simulation-UHMW-PE-adhesion/lammps/data/data.sim_md_11A
+read_data /Users/niko/Desktop/VSCode/simulation-UHMW-PE-adhesion/lammps/data/data.sim_md_1kA
 
 # main parameters
 pair_style lj/cut 2.5

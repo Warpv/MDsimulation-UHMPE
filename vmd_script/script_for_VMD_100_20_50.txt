@@ -29,7 +29,7 @@ set center [measure center $sel weight none]
 $sel moveby [vecscale -1.0 $center]
 vmdcon -info "moved center from $center to [measure center $sel weight none]"
 
-TopoTools::replicatemol top 1 10 20
+TopoTools::replicatemol top 1 10 8
 
 animate write pdb /Users/niko/Desktop/VSCode/simulation-UHMW-PE-adhesion/pdb_lib/sim_md_11A.pdb
 
