@@ -2,93 +2,10 @@ LAMMPS (11 Aug 2017)
 OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (../comm.cpp:90)
   using 1 OpenMP thread(s) per MPI task
 fix atomify all atomify
-#init
-units real
-boundary p p p
-atom_style molecular
 
-#log /Users/niko/Desktop/VSCode/simulation-UHMW-PE-adhesion/lammps script/log/${simname}.log
 
-read_data /Users/niko/Desktop/VSCode/simulation-UHMW-PE-adhesion/lammps/data/data.sim_md_1kA
-  orthogonal box = (-11.4895 -23.5271 -14.96) to (11.4895 23.5859 14.96)
-  1 by 1 by 1 MPI processor grid
-WARNING: Atom style in data file differs from currently defined atom style (../read_data.cpp:493)
-  reading atoms ...
-  1200 atoms
-  scanning bonds ...
-  1 = max bonds/atom
-  scanning angles ...
-  1 = max angles/atom
-  scanning dihedrals ...
-  1 = max dihedrals/atom
-  reading bonds ...
-  1120 bonds
-  reading angles ...
-  1040 angles
-  reading dihedrals ...
-  960 dihedrals
-  2 = max # of 1-2 neighbors
-  2 = max # of 1-3 neighbors
-  4 = max # of 1-4 neighbors
-  6 = max # of special neighbors
-
-# main parameters
-pair_style lj/cut 2.5
-bond_style harmonic
-angle_style harmonic
-#dihedral_style harmonic
-
-# don't compute non-bonded interactions
-# where we have bonded potentials
-special_bonds lj/coul 0.0 0.0 1.0
-  2 = max # of 1-2 neighbors
-  2 = max # of 1-3 neighbors
-  6 = max # of special neighbors
-
-# force field parameters
-pair_coeff   1 1   0.112 4.01 5.5   # A
-#pair_coeff   2 2   0.222 3.5 10.5   # Ar
-bond_coeff   1     5.0 1.0          # A-A
-angle_coeff  1    10.0 120.0        # A-A-A
-#dihedral_coeff 1 80.0 1 3 # A
-
-#neigh_modify every 1 delay 5 check yes
-
-group A type 1:1
-1200 atoms in group A
-
-#fix 1 all print 1000 "Atoms velocity = $vx $vy $vz"
-
-# minimisation
-#minimize 1.0e-4 1.0e-6 1000 10000
-
-fix 1 all nve
-fix 2 A bond/break 5 1 2.0
-#fix 3 wall/reflect zhi EDGE
-
-timestep 0.5
-
-# ----------------------------------
-
-run 5000
-WARNING: Asking for neigh list (../fix_atomify.cpp:63)
-Neighbor list info ...
-  update every 1 steps, delay 10 steps, check yes
-  max neighbors/atom: 2000, page size: 100000
-  master list distance cutoff = 7.5
-  ghost atom cutoff = 7.5
-  binsize = 3.75, bins = 7 13 8
-  2 neighbor lists, perpetual/occasional/extra = 1 1 0
-  (1) pair lj/cut, perpetual
-      attributes: half, newton on
-      pair build: half/bin/newton
-      stencil: half/bin/3d/newton
-      bin: standard
-  (2) fix atomify, occasional, copy from (1)
-      attributes: half, newton on
-      pair build: copy
-      stencil: none
-      bin: none
-Per MPI rank memory allocation (min/avg/max) = 6.965 | 6.965 | 6.965 Mbytes
-Step Temp E_pair E_mol TotEng Press 
-       0            0   -373.42025    1921.8896    1548.4694    7966.0555 
+# Initialization
+units		real
+boundary	f f f
+atom_style	molecular
+log 		/Users/niko/Desktop/VSCode/simulation-UHMW-PE-adhesion/lammps/log/log_sim_1kA.txt

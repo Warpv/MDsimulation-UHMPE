@@ -1,0 +1,3 @@
+read_data	${fname}
+read_data	PE_cl100.txt
+Total wall time: 0:00:28
