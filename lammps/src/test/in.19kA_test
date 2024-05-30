@@ -1,11 +1,24 @@
+#path to your data.file
+variable fname index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/data/sim_md_1kA.txt
+#sim name
+variable simname index sim_1kA
+#path to save final result folder
+variable sfolder index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/final_save/
+
+#path to your log folder
+variable logfolder index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/logs/
+
+#path to dump files
+variable dfolder index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/dumps/
+
+
+
 # Initialization
 units	real
 boundary p p p
+log 		${logfolder}log.${simname}
+read_data	${fname} #you might get error here, ignore it
 
-log /Users/niko/Desktop/VSCode/simulation-UHMW-PE-adhesion/lammps script/log/${simname}.log
-
-# Read in a data file containing information LAMMPS needs to run a simulation
-#read_data data.sim_md_11A
 
 # interaction styles
 atom_style molecular
@@ -40,7 +53,7 @@ fix 4 Ar deposit 100 3 500 12345 region slab near 1.0 & vz -85000 -15000
 fix 5 wall/reflect zhi EDGE 
 
 #fix 2 all print 1000 "Argon velocity = $vx $vy $vz"
-dump 1 all dcd 1 step1a.dcd /Users/niko/Desktop/VSCode/simulation-UHMW-PE-adhesion/lammps/dump
+#dump 1 all dcd 1 step1a.dcd YOUR_PATH/simulation-UHMW-PE-adhesion/lammps/dump
 
 
 

@@ -1,0 +1,25 @@
+read_data	/Users/niko/Desktop/VSCode/simulation-UHMW-PE-adhesion/lammps/data/sim_md_19kA.txt
+  orthogonal box = (-66.2365 -21.5225 -33) to (66.2355 21.5315 33)
+  1 by 1 by 1 MPI processor grid
+WARNING: Atom style in data file differs from currently defined atom style (../read_data.cpp:493)
+  reading atoms ...
+  19000 atoms
+  scanning bonds ...
+  1 = max bonds/atom
+  reading bonds ...
+  18800 bonds
+  2 = max # of 1-2 neighbors
+  2 = max # of 1-3 neighbors
+  4 = max # of 1-4 neighbors
+  6 = max # of special neighbors
+
+# Dreiding potential information
+neighbor	0.4 bin
+neigh_modify	every 10 one 10000
+bond_style      harmonic
+bond_coeff	1 350 1.53
+angle_style     harmonic
+angle_coeff	1 60 109.5
+ERROR: Numeric index is out of bounds (../angle_harmonic.cpp:171)
+Last command: angle_coeff	1 60 109.5
+Total wall time: 0:00:06
