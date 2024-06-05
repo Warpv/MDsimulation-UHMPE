@@ -1,0 +1,87 @@
+#path to your data.file
+variable fname index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/data/sim_argon.txt
+#sim name
+variable simname index sim_argon
+#path to save final result folder
+variable sfolder index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/final_save/
+
+#path to your log folder
+variable logfolder index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/logs/
+
+#path to dump files
+variable dfolder index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/dumps/
+
+
+# Initialization
+units		real
+boundary	p p p
+atom_style	molecular
+log 		${logfolder}log.${simname}
+read_data	${fname} #you might get error here, ignore it
+
+
+# Dreiding potential information
+neighbor	0.4 bin
+neigh_modify	every 10 one 10000
+bond_style      harmonic
+angle_style     harmonic
+dihedral_style	multi/harmonic
+dihedral_coeff	1 1.73 -4.49 0.776 6.99 0.0
+pair_style	lj/cut 10.5
+
+special_bonds lj/coul 0.0 0.0 1.0
+
+# force field parameters
+pair_coeff   1 1   0.112 4.01 5.5   # A
+pair_coeff   2 2   0.222 3.5 10.5   # Ar
+bond_coeff	 1 350 1.53             # A-A
+angle_coeff	 1 60 109.5             # A-A-A
+
+group A type 1
+group Ar type 2
+
+compute csym all centro/atom fcc
+compute peratom all pe/atom
+compute temp all temp
+compute kenetic all ke/atom
+
+#####################################################
+
+velocity all create 100 5324324 dist gaussian mom no rot no
+velocity Ar set  0 0 -0.3
+fix		1 all npt temp 100 100 50 iso 0 0 1000 drag 2
+
+fix 3 all bond/break 5 1 2.0
+
+
+
+timestep	1
+run		10000
+
+# # velocity 
+# velocity all create 100 5324324 dist gaussian mom no rot no
+# velocity Ar set  0 -0.7 0
+# fix 1 all nvt temp 280 320 $(100.0*df)
+# fix 2 all efield 0.0 0.0 0.00002
+# fix 3 A bond/break 5 1 2.0
+# fix 4 Ar deposit 100 3 500 12345 region slab near 1.0 & vz -85000 -15000
+# fix 5 wall/reflect zhi EDGE 
+
+
+write_restart 	${rfolder}restart.sim_argon
+write_data ${sfolder}sim_argon_saved_restart
+
+#####################################################
+# Define Settings
+# compute eng all pe/atom 
+# compute eatoms all reduce sum c_eng 
+
+#####################################################
+
+
+#dump 		1 all cfg 1 dump.sim_1kA_final*.cfg mass type xs ys zs c_csym c_peratom fx fy fz
+
+
+
+
+#print "All done"
