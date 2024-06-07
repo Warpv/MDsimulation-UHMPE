@@ -1,5 +1,5 @@
 #path to your data.file
-variable fname index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/data/sim_argon.txt
+variable data index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/data/
 #sim name
 variable simname index sim_argon
 #path to save final result folder
@@ -17,7 +17,7 @@ units		real
 boundary	p p p
 atom_style	molecular
 log 		${logfolder}log.${simname}
-read_data	${fname} #you might get error here, ignore it
+read_data	${data}sim_argon.txt  #you might get error here, ignore it
 
 
 # Dreiding potential information
@@ -47,34 +47,21 @@ compute kenetic all ke/atom
 
 #####################################################
 
-velocity all create 100 5324324 dist gaussian mom no rot no
-velocity Ar set  0 0 -0.3
+velocity all create 100 5324324 dist gaussian mom no rot no     
+velocity Ar set  0 0 -0.3                                       #velocity = Angstroms/femtosecondf
 fix		1 all npt temp 100 100 50 iso 0 0 1000 drag 2
-
-fix 3 all bond/break 5 1 2.0
-
-
+fix     2 all bond/break 5 1 2.0
 
 timestep	1
 run		10000
 
-# # velocity 
-# velocity all create 100 5324324 dist gaussian mom no rot no
-# velocity Ar set  0 -0.7 0
-# fix 1 all nvt temp 280 320 $(100.0*df)
-# fix 2 all efield 0.0 0.0 0.00002
-# fix 3 A bond/break 5 1 2.0
-# fix 4 Ar deposit 100 3 500 12345 region slab near 1.0 & vz -85000 -15000
-# fix 5 wall/reflect zhi EDGE 
 
-
+# write restart file for incase of crash
 write_restart 	${rfolder}restart.sim_argon
+
+# save final data
 write_data ${sfolder}sim_argon_saved_restart
 
-#####################################################
-# Define Settings
-# compute eng all pe/atom 
-# compute eatoms all reduce sum c_eng 
 
 #####################################################
 
