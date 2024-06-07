@@ -1,8 +1,6 @@
 # simulation-UHMW-PE-adhesion
 simulation UHMW PE adhesion after argon processing
 
-main file VKR --> [VKR_Niko](https://github.com/Warpv/simulation-UHMW-PE-adhesion/blob/main/Word_VKR)
-
 # Setup
 
 how to prepere for MD
@@ -11,7 +9,7 @@ how to prepere for MD
 
 how to run it & what tools exists
 
-
+![alt text]([http://url/to/img.png](https://github.com/Warpv/simulation-UHMW-PE-adhesion/blob/main/images/start_struct/start_struct_1.1.png))
 
 # Save Simulation
 
