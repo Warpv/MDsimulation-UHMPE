@@ -1,4 +1,4 @@
-# simulation-UHMW-PE-adhesion
+# MDsimulation-UHMPE
 simulation UHMW PE adhesion after argon processing
 
 # Setup
