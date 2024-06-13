@@ -1,7 +1,7 @@
 # MDsimulation-UHMPE
 simulation UHMW PE adhesion after argon processing
 
-![alt text](https://disk.yandex.ru/i/JDwWZDZnsY1ssg)
+MOV available on disk https://disk.yandex.ru/i/JDwWZDZnsY1ssg
 
 # Setup
 
