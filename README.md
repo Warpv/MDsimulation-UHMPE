@@ -5,11 +5,11 @@ simulation UHMW PE adhesion after argon processing
 
 # Setup
 
-To start simulation you need to have installed (Lammps)[https://github.com/lammps/lammps]
+To start simulation you need to have installed [Lammps](https://github.com/lammps/lammps)
 
-For more information about lammps see (here)[https://lammps.sandia.gov/doc/Howto_run.html]
+For more information about lammps see [here](https://lammps.sandia.gov/doc/Howto_run.html)
 
-For better understanding and convenience you can use (Atomify)[https://github.com/ovilab/atomify], but you should take into account that Atomify uses LAMMPS version 2017
+For better understanding and convenience you can use [Atomify](https://github.com/ovilab/atomify), but you should take into account that Atomify uses LAMMPS version 2017
 
 
 # Run Lammps simulation
@@ -33,7 +33,7 @@ cd PATH_TO_REPO/MDsimulation-UHMPE
 lmp_serial -in in.file
 ```
 
-For more information about running LAMMPS see (here)[https://guriang.unpad.ac.id/lammpsdoc/Run_basics.html]
+For more information about running LAMMPS see [here](https://guriang.unpad.ac.id/lammpsdoc/Run_basics.html)
 
 ## Atomify
 
