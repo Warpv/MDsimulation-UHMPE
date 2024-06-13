@@ -1,15 +1,15 @@
 #path to your data.file
-variable fname index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/data/sim_md_1kA.txt
+variable fname index YOURT_PATH/MDsimulation-UHMPE/lammps/data/sim_md_1kA.txt
 #sim name
 variable simname index sim_1kA
 #path to save final result folder
-variable sfolder index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/final_save/
+variable sfolder index YOURT_PATH/MDsimulation-UHMPE/lammps/final_save/
 
 #path to your log folder
-variable logfolder index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/logs/
+variable logfolder index YOURT_PATH/MDsimulation-UHMPE/lammps/logs/
 
 #path to dump files
-variable dfolder index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/dumps/
+variable dfolder index YOURT_PATH/MDsimulation-UHMPE/lammps/dumps/
 
 
 

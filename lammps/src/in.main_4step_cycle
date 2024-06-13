@@ -1,26 +1,25 @@
-# This file for preparing system for simulation
-
 # VARIABLES
 
-#path to your data.files
-variable data index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/data/
+#path to your data.file
+variable data index YOURT_PATH/MDsimulation-UHMPE/lammps/data/
 #sim name
 variable simname index sim_1kA
 #path to restart sim folder
-variable rfolder index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/restart_sim/
+variable rfolder index YOURT_PATH/MDsimulation-UHMPE/lammps/restart_sim/
 #path to save final result folder
-variable sfolder index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/final_save/
+variable sfolder index YOURT_PATH/MDsimulation-UHMPE/lammps/final_save/
 
 #path to your log folder
-variable logfolder index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/logs/
+variable logfolder index YOURT_PATH/MDsimulation-UHMPE/lammps/logs/
 
 #path to dump files
-variable dfolder index YOURT_PATH/simulation-UHMW-PE-adhesion/lammps/dumps/
+variable dfolder index YOURT_PATH/MDsimulation-UHMPE/lammps/dumps/
 
-
+#define the box size
 variable L equal 47.0	# y green
 variable T equal 23.0	# x red 
 variable H equal 30.0	# z blue
+
 
 variable LR equal 0.5*${L}
 variable LL equal -0.5*${L}
@@ -36,7 +35,7 @@ units		real
 boundary	p p p
 atom_style	molecular
 log 		${logfolder}log.${simname}
-read_data	${data}sim_md_1kA.txt
+read_data	${data}sim_md_1kA.txt #you might get error here, ignore it
 
 
 # Dreiding potential information
@@ -51,13 +50,11 @@ dihedral_coeff	1 1.73 -4.49 0.776 6.99 0.0
 pair_style	lj/cut 10.5
 pair_coeff	1 1 0.112 4.01 10.5
 
-# define what we want to compute
+
 compute csym all centro/atom fcc
 compute peratom all pe/atom
 compute temp all temp
 compute kenetic all ke/atom
-#compute eng all pe/atom 
-#compute eatoms all reduce sum c_eng 
 
 
 # Create regions to place atoms
@@ -87,7 +84,9 @@ fix		5 Tforce addforce 0 0 -3
 fix		6 Bforce addforce 0 0 3
 thermo_style	custom step temp press
 thermo          	100
-#dump 1 all cfg 1 dump.sim_1kA_*.cfg mass type xs ys zs c_csym c_peratom fx fy fz
+
+# dump 		1 all cfg 10 ${dfolder}d1/dump.sim_1_*.cfg mass type xs ys zs c_csym c_peratom fx fy fz # if you want to dump data, uncomment this line
+
 timestep	1
 run		5000
 unfix 1
@@ -104,6 +103,9 @@ fix		1 all npt temp 500.0 500.0 50 iso 0 0 1000 drag 2
 fix  		2 all momentum 1 linear 1 1 1
 thermo_style	custom step temp press
 thermo          	100
+
+# dump 		2 all cfg 10 ${dfolder}d2/dump.sim_2_*.cfg mass type xs ys zs c_csym c_peratom fx fy fz # if you want to dump data, uncomment this line
+
 timestep	0.5
 reset_timestep	0
 run		5000
@@ -112,11 +114,14 @@ unfix 2
 
 write_restart 	${rfolder}restart.sim_1kA_restart_NPT_*
 
-# Equilibration Stage 3 (NPT dynamics from 500 K --> 300 K)
+# Equilibration Stage 3 (NPT dynamics from 500 K --> 100 K)
 fix		1 all npt temp 500 300 50 iso 0 0 1000 drag 2
 fix		2 all momentum 1 linear 1 1 1
 thermo_style	custom step temp press
 thermo          	10
+
+# dump 		3 all cfg 10 ${dfolder}d3/dump.sim_3_*.cfg mass type xs ys zs c_csym c_peratom fx fy fz # if you want to dump data, uncomment this line
+
 timestep	0.5
 reset_timestep 	0
 run		5000
@@ -125,8 +130,8 @@ unfix 2
 
 write_restart 	${rfolder}restart.sim_1kA_restart_NPT_500K_100K_*
 
-# Equilibration Stage 4 (NPT dynamics at 300 K)
 
+# Equilibration Stage 4 (NPT dynamics at 100 K)
 fix		1 all npt temp 300 300 50 iso 0 0 1000 drag 2
 fix		2 all momentum 1 linear 1 1 1
 fix		3 Rforce addforce 0 -1 0
@@ -135,31 +140,28 @@ fix		5 Tforce addforce 0 0 -1
 fix		6 Bforce addforce 0 0 1
 thermo_style	custom step temp press epair ebond eangle edihed pxx pyy pzz lx ly lz
 thermo          	10
+
+dump 		4 all cfg 10 ${dfolder}d4/dump.sim_4_*.cfg mass type xs ys zs c_csym c_peratom fx fy fz
+
 timestep	0.5
 reset_timestep 	0
 run		3000
 unfix 1
 unfix 2
 
-# write restart file for incase of crash
 write_restart 	${rfolder}restart.sim_1kA_restart_NPT_100K_*
 
-# save final data
 write_data ${sfolder}data.sim_1kA_final_*
 
 
 #####################################################
+# Define Settings
+#compute eng all pe/atom 
+#compute eatoms all reduce sum c_eng 
 
-# Minimization old try
- 
-#dump 		1 all cfg 1 ${dfolder}dump.sim_1kA_final*.cfg mass type xs ys zs c_csym c_peratom fx fy fz
+#####################################################
+# Minimization
 
-#reset_timestep 0 
-#fix 1 all nvt temp 500.0 500.0 100.0
-#thermo 20 
-#thermo_style custom step pe lx ly lz press pxx pyy pzz c_eatoms 
-#min_style cg
-#minimize 1e-25 1e-25 500000 1000000 
 
 
 #print "All done"
